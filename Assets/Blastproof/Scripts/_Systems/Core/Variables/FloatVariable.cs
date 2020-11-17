@@ -1,34 +1,37 @@
-﻿using Sirenix.OdinInspector;
+﻿using JetBrains.Annotations;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Blastproof.Systems.Core.Variables
 {
-    [CreateAssetMenu(menuName = "Blastproof/Variables/IntVariable")]
+    [CreateAssetMenu(menuName = "Blastproof/Variables/FloatVariable")]
     public class FloatVariable : ScriptableObject
     {
         public Action onValueChanged;
 
-        protected float val;
+        [SerializeField, HideInInspector] protected float _val;
         [ShowInInspector]
         public virtual float Value
         {
-            get => val;
-            set
-            {
-                UpdateBackingField(value);
-                onValueChanged.Fire();
-            }
+            get => _val;  set { _val = value; onValueChanged.Fire(); }          
         }      
 
-        public void Increment() { Value++; }
-        public void Decrement() { Value--; }
+        public void Increment() { _val++; }
+        public void Decrement() { _val--; }
+
+        public static implicit operator float (FloatVariable fv)
+        {
+            return fv._val;
+        }     
 
         protected virtual void UpdateBackingField(float newValue)
         {
-            val = newValue;
+            _val = newValue;
         }
+
     }
 }
