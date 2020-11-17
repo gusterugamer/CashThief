@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Cop : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private bool _caught = false;
 
     private void FixedUpdate()
     {
@@ -13,9 +13,11 @@ public class Cop : MonoBehaviour
 
     void Watch()
     {
-        if (Physics.Raycast(transform.position, transform.forward, 1.0f, LayerMask.NameToLayer("Player")))
+        if (Physics.Raycast(transform.position ,transform.forward, out RaycastHit hitInfo, 1.0f, LayerMask.NameToLayer("Player")) && !_caught)
         {
-            Debug.Log("HIT");
+            hitInfo.transform.GetComponent<Player>().Stop();
+            _caught = true;
+            Debug.Log("Caught!");
         }
-    }
+    }   
 }
