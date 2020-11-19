@@ -53,8 +53,8 @@ public class MainCamController : MonoBehaviour
         if (Input.GetMouseButton(2) && _currentPos != Input.mousePosition)
         {            
             Vector3 delta = _mainCam.ScreenToWorldPoint(_currentPos) - _mainCam.ScreenToWorldPoint(_newPos);           
-            _mainCam.transform.position += delta;    
-            
+            _mainCam.transform.position += delta;
+            int a = 5;
         }
     }    
 }
